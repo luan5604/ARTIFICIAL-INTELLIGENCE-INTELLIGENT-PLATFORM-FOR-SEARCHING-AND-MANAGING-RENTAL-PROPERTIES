@@ -1,8 +1,8 @@
 const db = require('../models');
 const { Op } = require('sequelize');
 
-// Cấu hình OpenRouter API Key và Model 
-const apiKey = process.env.OPENROUTER_API_KEY;
+// Cấu hình OpenRouter API Key và Model trực tiếp trong code theo yêu cầu
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const OPENROUTER_MODEL = 'openai/gpt-4o-mini';
 
 const askAI = async (req, res) => {
@@ -16,7 +16,7 @@ const askAI = async (req, res) => {
       return res.status(500).json({ error: 'Chưa cấu hình API Key cho AI' });
     }
 
-    const user = req.user;
+    const user = req.user; 
     const profile = await db.Profile.findOne({ where: { user_id: user.id } });
     const userName = profile?.full_name || user.email || 'Khách hàng';
     const roleName = user.Role?.role_name || 'KHACH_THUE';
